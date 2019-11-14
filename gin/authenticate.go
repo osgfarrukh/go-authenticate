@@ -8,6 +8,8 @@ import (
 
 type User interface {
 	getByUsername(string) interface{}
+	getUsername() string
+	getPassword() string
 }
 
 type Authenticate struct {
