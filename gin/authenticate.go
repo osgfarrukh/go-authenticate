@@ -18,7 +18,7 @@ type userModel struct {
 }
 
 type User interface {
-	IsUsernameExist(string) (bool, error)
+	GetUser(string) error
 	GetUsername() string
 	GetPassword() string
 	CheckPassword(string) bool
@@ -53,16 +53,10 @@ func (a Authenticate) LoginController(c *gin.Context) {
 		return
 	}
 	fmt.Printf("username: %s\npassword: %s\n", user.Username, user.Password)
-	ok, err := a.User.IsUsernameExist(user.Username)
+	err = a.User.GetUser(user.Username)
 	if err != nil {
 		c.AbortWithStatusJSON(404, gin.H{
 			"error": err.Error(),
-		})
-		return
-	}
-	if !ok {
-		c.AbortWithStatusJSON(404, gin.H{
-			"error": "user not found",
 		})
 		return
 	}
