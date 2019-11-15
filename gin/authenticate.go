@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-type Claims struct {
+type claims struct {
 	Username string `json:"username"`
 	jwt.StandardClaims
 }
 
-type UserModel struct {
+type userModel struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
@@ -31,7 +31,7 @@ type Authenticate struct {
 
 func (a Authenticate) LoginController(c *gin.Context) {
 	var err error
-	var user UserModel
+	var user userModel
 	err = c.BindJSON(&user)
 	if err != nil {
 		c.AbortWithStatusJSON(400, gin.H{
@@ -57,7 +57,7 @@ func (a Authenticate) LoginController(c *gin.Context) {
 		})
 		return
 	}
-	claims := Claims{
+	claims := claims{
 		Username: user.Username, StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Minute * 30).Unix(),
 		},
