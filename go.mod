@@ -1,4 +1,4 @@
-module github.com/protimaru/authenticate
+module github.com/protimaru/go-authenticate
 
 go 1.13
 
