@@ -26,7 +26,14 @@ type User interface {
 
 type Authenticate struct {
 	SecretKey string
-	User
+	User      User
+}
+
+func NewAuthenticate(secretKey string, userModel User) *Authenticate {
+	return &Authenticate{
+		SecretKey: secretKey,
+		User:      userModel,
+	}
 }
 
 func (a Authenticate) LoginController(c *gin.Context) {
