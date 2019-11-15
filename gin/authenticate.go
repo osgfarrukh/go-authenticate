@@ -18,10 +18,10 @@ type userModel struct {
 }
 
 type User interface {
-	getByUsername(string) (bool, error)
-	getUsername() string
-	getPassword() string
-	checkPassword(string) bool
+	IsUsernameExist(string) (bool, error)
+	GetUsername() string
+	GetPassword() string
+	CheckPassword(string) bool
 }
 
 type Authenticate struct {
