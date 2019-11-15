@@ -52,6 +52,7 @@ func (a Authenticate) LoginController(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Printf("username: %s\npassword: %s\n", user.Username, user.Password)
 	ok, err := a.User.IsUsernameExist(user.Username)
 	if err != nil {
 		c.AbortWithStatusJSON(404, gin.H{
