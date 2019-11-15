@@ -52,7 +52,7 @@ func (a Authenticate) LoginController(c *gin.Context) {
 		})
 		return
 	}
-	ok, err := a.User.getByUsername(user.Username)
+	ok, err := a.User.IsUsernameExist(user.Username)
 	if err != nil {
 		c.AbortWithStatusJSON(404, gin.H{
 			"error": err.Error(),
@@ -65,7 +65,7 @@ func (a Authenticate) LoginController(c *gin.Context) {
 		})
 		return
 	}
-	if ok := a.User.checkPassword(user.Password); !ok {
+	if ok := a.User.CheckPassword(user.Password); !ok {
 		c.AbortWithStatusJSON(404, gin.H{
 			"error": "username or password is incorrect",
 		})
