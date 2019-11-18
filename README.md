@@ -1,6 +1,6 @@
 To install: ```go get -u github.com/protimaru/go-authenticate```
 # Example for ```gin framework```
-```
+```golang
 package main
 
 import (
