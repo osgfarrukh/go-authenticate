@@ -16,16 +16,16 @@ type User struct {
 
 /* 
     User struct must have these methods:
-    *GetUser(string) error
-	*GetUsername() string
-	*GetPassword() string
-	*CheckPassword(string) bool 
+    * GetUser(string) error
+    * GetUsername() string
+    * GetPassword() string
+    * CheckPassword(string) bool 
 */
 
 func main() {
     r := gin.New()
-    auth := goAuth.NewAuthenticate("secret_key", )
+    auth := goAuth.NewAuthenticate("secret_key", &User{})
     r.POST("/login", auth.LoginController)
-    r.User(auth.Middleware())
+    r.Use(auth.Middleware())
 }
 ```
