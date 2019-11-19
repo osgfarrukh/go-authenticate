@@ -18,10 +18,10 @@ type userModel struct {
 }
 
 type User interface {
-	GetUser(string) error
+	GetUser(username string) error
 	GetUsername() string
 	GetPassword() string
-	CheckPassword(string) bool
+	CheckPassword(password string) bool
 }
 
 type Authenticate struct {
@@ -29,10 +29,10 @@ type Authenticate struct {
 	User      User
 }
 
-func NewAuthenticate(secretKey string, userModel User) *Authenticate {
+func NewAuthenticate(secretKey string, user User) *Authenticate {
 	return &Authenticate{
 		SecretKey: secretKey,
-		User:      userModel,
+		User:      user,
 	}
 }
 
@@ -41,27 +41,26 @@ func (a Authenticate) LoginController(c *gin.Context) {
 	var user userModel
 	err = c.BindJSON(&user)
 	if err != nil {
-		c.AbortWithStatusJSON(400, gin.H{
+		c.JSON(400, gin.H{
 			"error": "username or password is empty",
 		})
 		return
 	}
 	if user.Username == "" || user.Password == "" {
-		c.AbortWithStatusJSON(400, gin.H{
+		c.JSON(400, gin.H{
 			"error": "username or password is empty",
 		})
 		return
 	}
-	fmt.Printf("username: %s\npassword: %s\n", user.Username, user.Password)
 	err = a.User.GetUser(user.Username)
 	if err != nil {
-		c.AbortWithStatusJSON(404, gin.H{
+		c.JSON(500, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
 	if ok := a.User.CheckPassword(user.Password); !ok {
-		c.AbortWithStatusJSON(404, gin.H{
+		c.JSON(400, gin.H{
 			"error": "username or password is incorrect",
 		})
 		return
