@@ -54,9 +54,7 @@ func (a Authenticate) LoginController(c *gin.Context) {
 	}
 	err = a.User.GetUser(user.Username)
 	if err != nil {
-		c.JSON(500, gin.H{
-			"error": err.Error(),
-		})
+		c.AbortWithStatus(401)
 		return
 	}
 	if ok := a.User.CheckPassword(user.Password); !ok {
